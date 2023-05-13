@@ -2,7 +2,8 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.callbacks import TensorBoard, EarlyStopping, ModelCheckpoint
 import os
 from Dataset_tools import load_dataset
-from Model import regular_classifier
+from Model import regular_classifier, load_model
+import numpy as np
 '''
 Model_train.py
 
@@ -22,6 +23,8 @@ Steps for running Tensorboard:
 @Author:  Polo Lopez
 '''
 
+# Mode (either 'train' or 'evaluate')
+MODE = 'evaluate'
 
 dataset_dir = os.getcwd() + '/TrafficSignClassifier/GTSRB'
 logging_dir = os.getcwd() + "/TrafficSignClassifier/logs"
@@ -34,9 +37,6 @@ batch_size = 16
 # Basic parameters for image data
 im_resolution = (32, 32)
 grayscale = True
-
-# The model that is used for traning
-model = regular_classifier(resolution=im_resolution, grayscale=grayscale)
 
 train_set, valid_set = load_dataset(dataset_dir, im_resolution, grayscale=grayscale)     #  (images, labels)
 
@@ -63,6 +63,32 @@ def make_log(history):
         log_file.write(str(e) + '\t' + str(history.history['loss'][e]) + '\t' + str(history.history['val_loss'][e]) + '\n')
     log_file.close()
 
-# Training and logging
-history = train_model(model, epochs=num_epochs, batch_size=batch_size, name=model_name)
-make_log(history)
+# Model evaluation function
+def evaluate_model(model):
+    num_correct = 0
+    for i in range(valid_set[0].shape[0]):
+        pred = np.argmax( model( np.expand_dims(valid_set[0][i], axis=0) ) )
+        label = np.argmax( valid_set[1][i] )
+        if pred==label:
+            num_correct += 1
+
+    print('\n-----------------------------------------------')
+    print('Validation Accuracy:   ' + str(np.round(100*(num_correct / valid_set[0].shape[0]), 2)) + ' %' )
+    print('-----------------------------------------------\n')
+
+# Training and logging / evaluation
+if MODE == 'train':
+    # The model that is used for training
+    model = regular_classifier(resolution=im_resolution, grayscale=grayscale)
+
+    history = train_model(model, epochs=num_epochs, batch_size=batch_size, patience=1, name=model_name)
+    make_log(history)
+
+elif MODE == 'evaluate':
+    # load the trained model
+    model = load_model(model_name)
+    evaluate_model(model)
+
+else:
+    print("\n ERROR:  Unknown mode '" + MODE + "'")
+    exit()

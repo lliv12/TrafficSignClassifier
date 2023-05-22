@@ -56,4 +56,4 @@ if __name__ == "__main__":
 
     model = load_model(args.model, args.model_ckpt)
     data_loader = DataLoader(load_dataset('test'), batch_size=args.batch_size)
-    validate(model, data_loader)
+    validate(model, data_loader, verbose=True)

@@ -2,8 +2,7 @@
 Pytorch implementation of a machine learning project for classifying images of traffic signs from the German Traffic Sign
 dataset (GTSRB).
 
-
-![Screenshot 2023-05-22 150059](https://github.com/lliv12/TrafficSignClassifier/assets/48921643/71250618-7625-4c9f-b8bf-a9ae13878878)
+![Screenshot 2023-05-22 150059](https://github.com/lliv12/TrafficSignClassifier/blob/master/assets/Screenshot%202023-05-22%20150059.png)
 
 ### Dataset
 The GTSRB dataset consists of over 50,000 labeled images of traffic signs, belonging to 43 different classes.
@@ -50,7 +49,7 @@ most likely (top) to least likely (bottom). On the x-axis is the model's confide
 ranging from 0.0 to 1.0. The bar that is green is for the correct class.
 
 <p align="center">
-  <img src="https://github.com/lliv12/TrafficSignClassifier/assets/48921643/8716832d-7e58-4f64-a072-c427b1f2e3d2" alt="image" style="width:400px">
+  <img src="https://github.com/lliv12/TrafficSignClassifier/blob/master/assets/Screenshot%202023-05-22%20150419.png" alt="image" style="width:400px">
 </p>
 
 # Training
@@ -115,5 +114,5 @@ Preview an image pipeline to get an idea of what images look like after data aug
 specified, the script will display augmentations on 5 random image classes by default.
 
 <p align="center">
-  <img src="https://github.com/lliv12/TrafficSignClassifier/assets/48921643/a6c188b5-27e9-469f-9fba-8df9adbb65e5" alt="image" style="width:430px">
+  <img src="https://github.com/lliv12/TrafficSignClassifier/blob/master/assets/Screenshot%202023-05-22%20154421.png" alt="image" style="width:430px">
 </p>
